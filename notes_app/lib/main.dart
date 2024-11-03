@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:notes_app/models/note_database.dart';
+import 'package:notes_app/pages/auth_screen.dart';
 import 'package:notes_app/pages/note_page.dart';
 import 'package:notes_app/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const NotesPage(),
+      home: AuthScreen(),
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
