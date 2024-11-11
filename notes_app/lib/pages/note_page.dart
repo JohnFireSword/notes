@@ -1,9 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:notes_app/components/drawer.dart';
+import 'package:notes_app/components/login_or_register.dart';
+
 import 'package:notes_app/models/note.dart';
 import 'package:notes_app/models/note_database.dart';
+import 'package:notes_app/pages/auth_screen.dart';
 import 'package:notes_app/pages/notes_details.dart';
 import 'package:notes_app/pages/settings_page.dart';
 import 'package:notes_app/pages/task_details.dart';
@@ -26,6 +29,15 @@ class _NotesPageState extends State<NotesPage> {
     readNotes();
   }
 
+  void logout() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginOrRegister()),
+      (route) => false,
+    );
+    
+  }
+
   void readNotes() {
     context.read<NoteDatabase>().fetchNotes();
   }
@@ -43,9 +55,10 @@ class _NotesPageState extends State<NotesPage> {
         actions: [
           MaterialButton(
             onPressed: () {
-              context
-                  .read<NoteDatabase>()
-                  .updateNote(note.id, textController.text,);
+              context.read<NoteDatabase>().updateNote(
+                    note.id,
+                    textController.text,
+                  );
               textController.clear();
               Navigator.pop(context);
             },
@@ -98,6 +111,13 @@ class _NotesPageState extends State<NotesPage> {
         ],
       ),
       appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child:
+                IconButton(onPressed: logout, icon: const Icon(Icons.logout)),
+          )
+        ],
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,

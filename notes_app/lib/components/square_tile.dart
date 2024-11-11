@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SquareTile extends StatelessWidget {
-  const SquareTile({super.key, required this.imagePath});
+  const SquareTile({super.key, required this.imagePath,required this.backgroundColor});
 
   final String imagePath;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +13,10 @@ class SquareTile extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
           borderRadius: BorderRadius.circular(16),
-          color: Colors.grey[200]),
+          color: backgroundColor),
       child: Image.asset(
         imagePath,
-        height: 40,
+        height: 20,
       ),
     );
   }

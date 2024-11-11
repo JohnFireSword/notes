@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginButton extends StatelessWidget {
-  const LoginButton({super.key, required this.onTap});
+  const LoginButton({super.key, required this.onTap, required this.text});
 
   final Function()? onTap;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +26,8 @@ class LoginButton extends StatelessWidget {
           ),
         ),
         child: Center(
-            child: Text("Sign in",
-                style: GoogleFonts.dmSans(color: Colors.white,fontSize: 20))),
+            child: Text(text,
+                style: GoogleFonts.dmSans(color: Colors.white, fontSize: 20))),
         // child: ElevatedButton(
         //   onPressed: () {},
         //   style: ElevatedButton.styleFrom(

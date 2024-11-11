@@ -28,10 +28,8 @@ class _NotesDetailsState extends State<NotesDetails> {
   }
 
   void togglePin(Note note) {
-    bool newPinState = !note.isPinned;
-    context
-        .read<NoteDatabase>()
-        .updateNote(note.id, note.text, isPinned: newPinState);
+    context.read<NoteDatabase>().togglePin(note);
+    readNotes();
   }
 
   void updateNote(Note note) {
@@ -231,16 +229,17 @@ class _NotesDetailsState extends State<NotesDetails> {
                             const EdgeInsets.only(top: 15, left: 30, right: 30),
                         child: Slidable(
                           key: ValueKey(note.id),
-                          startActionPane:
-                              ActionPane(motion: StretchMotion(), children: [
-                            SlidableAction(
-                              onPressed: (context) => togglePin(note),
-                              icon: note.isPinned
-                                  ? Icons.push_pin
-                                  : Icons.push_pin_outlined,
-                              backgroundColor: Colors.yellow.shade300,
-                            ),
-                          ]),
+                          startActionPane: ActionPane(
+                              motion: const StretchMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) => togglePin(note),
+                                  icon: note.isPinned
+                                      ? Icons.push_pin
+                                      : Icons.push_pin_outlined,
+                                  backgroundColor: Colors.yellow.shade300,
+                                ),
+                              ]),
                           endActionPane: ActionPane(
                             motion: const StretchMotion(),
                             children: [

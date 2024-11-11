@@ -24,22 +24,31 @@ class NoteDatabase extends ChangeNotifier {
 
   Future<void> fetchNotes() async {
     List<Note> fetchedNotes = await isar.notes.where().findAll();
-    currentNotes.sort((a, b) {
-      if (a.isPinned && !b.isPinned) return -1;
-      if (!a.isPinned && b.isPinned) return 1;
-      return 0;
-    });
+
     currentNotes.clear();
     currentNotes.addAll(fetchedNotes);
     notifyListeners();
   }
 
-  Future<void> updateNote(int id, String newText,
-      {bool isPinned = false}) async {
+  void togglePin(Note note) async {
+    note.isPinned = !note.isPinned;
+
+    currentNotes.sort((a, b) {
+      if (a.isPinned && !b.isPinned) return -1; 
+      if (!a.isPinned && b.isPinned) return 1; 
+      return a.id.compareTo(
+          b.id); 
+    });
+    notifyListeners();
+  }
+
+  Future<void> updateNote(
+    int id,
+    String newText,
+  ) async {
     final existingNote = await isar.notes.get(id);
     if (existingNote != null) {
       existingNote.text = newText;
-      existingNote.isPinned = isPinned;
 
       await isar.writeTxn(() => isar.notes.put(existingNote));
       await fetchNotes();

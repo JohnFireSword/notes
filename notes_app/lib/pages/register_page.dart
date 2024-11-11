@@ -5,15 +5,15 @@ import 'package:notes_app/components/my_textfield.dart';
 import 'package:notes_app/pages/note_page.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 
-class AuthScreen extends StatelessWidget {
-  AuthScreen({super.key, required this.onTap});
+class RegisterPage extends StatelessWidget {
+  RegisterPage({super.key, required this.onTap});
 
   final emailController = TextEditingController();
   final passController = TextEditingController();
 
-  final Function()? onTap;
+  final void Function()? onTap;
 
-  void signUserIn(BuildContext context) {
+  void signUserUp(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const NotesPage()),
@@ -30,9 +30,12 @@ class AuthScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/TimeTamer.png', scale: 2),
+                Image.asset(
+                  'assets/TimeTamer.png',
+                  height: 200,
+                ),
                 Text(
-                  "Welcome back!",
+                  "Let's create an account",
                   style: GoogleFonts.dmSerifText(
                       color: Colors.grey[700], fontSize: 16),
                 ),
@@ -46,6 +49,12 @@ class AuthScreen extends StatelessWidget {
                 MyTextfield(
                   controller: passController,
                   hintText: 'Password',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 10),
+                MyTextfield(
+                  controller: passController,
+                  hintText: 'Confirm Password',
                   obscureText: true,
                 ),
                 const SizedBox(height: 10),
@@ -63,8 +72,8 @@ class AuthScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 LoginButton(
-                  text: 'Sign in',
-                  onTap: () => signUserIn(context),
+                  text: "Sign up",
+                  onTap: () => signUserUp(context),
                 ),
                 const SizedBox(height: 15),
                 Padding(
@@ -144,22 +153,19 @@ class AuthScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
                 const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Not a member?",
+                      "Already a member?",
                       style: GoogleFonts.dmSans(color: Colors.grey[700]),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: onTap,
                       child: Text(
-                        'Register now',
+                        'Login now',
                         style: GoogleFonts.dmSans(color: Colors.blue[700]),
                       ),
                     ),
