@@ -33,7 +33,8 @@ class MyDrawer extends StatelessWidget {
           DrawerContents(
             title: 'Tasks',
             leading: const Icon(Icons.task_alt_outlined),
-            onTap: () => Navigator.pop(context),
+            onTap: () => Navigator.pop(context)
+            
           ),
           DrawerContents(
             title: 'Settings',

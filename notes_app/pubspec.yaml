@@ -47,7 +47,7 @@ dependencies:
   curved_navigation_bar: ^1.0.6
   flutter_native_splash: ^2.4.2
   flutter_slidable: ^3.1.1
-  google_sign_in: ^6.2.1
+  google_sign_in: ^6.2.2
   firebase_core: ^3.6.0
   firebase_auth: ^5.3.1
   social_login_buttons: ^1.0.7

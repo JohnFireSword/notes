@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:notes_app/components/login_button.dart';
 import 'package:notes_app/components/my_textfield.dart';
 import 'package:notes_app/pages/note_page.dart';
+import 'package:notes_app/services/auth_service.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -10,6 +11,7 @@ class AuthScreen extends StatelessWidget {
 
   final emailController = TextEditingController();
   final passController = TextEditingController();
+  final AuthService _authService = AuthService();
 
   final Function()? onTap;
 
@@ -18,6 +20,19 @@ class AuthScreen extends StatelessWidget {
       context,
       MaterialPageRoute(builder: (context) => const NotesPage()),
     );
+  }
+
+  void signInWithGoogle(BuildContext context) async {
+    final user = await _authService.signInWithGoogle();
+    if (user != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const NotesPage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Google sign in failed!")));
+    }
   }
 
   @override
@@ -105,7 +120,7 @@ class AuthScreen extends StatelessWidget {
                         imageWidth: 25,
                         borderRadius: 15,
                         text: '',
-                        onPressed: () {}),
+                        onPressed: () => signInWithGoogle(context)),
                     const SizedBox(
                       width: 10,
                     ),
@@ -147,7 +162,6 @@ class AuthScreen extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-              
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

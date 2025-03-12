@@ -10,6 +10,7 @@ import 'package:notes_app/pages/auth_screen.dart';
 import 'package:notes_app/pages/notes_details.dart';
 import 'package:notes_app/pages/settings_page.dart';
 import 'package:notes_app/pages/task_details.dart';
+import 'package:notes_app/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
 class NotesPage extends StatefulWidget {
@@ -22,6 +23,7 @@ class NotesPage extends StatefulWidget {
 class _NotesPageState extends State<NotesPage> {
   final textController = TextEditingController();
   int _selectedIndex = 0;
+  final AuthService _authService = AuthService();
 
   @override
   void initState() {
@@ -30,12 +32,14 @@ class _NotesPageState extends State<NotesPage> {
   }
 
   void logout() {
+    _authService.removeToken();
+    _authService.removeUserID();
+
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => LoginOrRegister()),
       (route) => false,
     );
-    
   }
 
   void readNotes() {

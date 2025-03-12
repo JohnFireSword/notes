@@ -12,14 +12,14 @@ class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final _storage = const FlutterSecureStorage();
 
-  Future<AuthData> authenticate(String email,String password)async{
+  Future<AuthData> authenticate(String email, String password) async {
     var url = Uri.https('');
-    final response = await http.post(url,body:{
-      'email' : email,
+    final response = await http.post(url, body: {
+      'email': email,
       'password': password,
     });
 
-     if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       if (data['result'] == 'success') {
         await _storage.write(
@@ -35,7 +35,7 @@ class AuthService {
     }
   }
 
-   Future<String?> getToken() async {
+  Future<String?> getToken() async {
     return await _storage.read(key: D.loggedInToken);
   }
 
@@ -47,32 +47,19 @@ class AuthService {
     await _storage.delete(key: D.loggedInUserid);
   }
 
+  // Google Sign-In
+  signInWithGoogle() async {
+    _googleSignIn.signOut();
+    final GoogleSignInAccount? gUser = await _googleSignIn.signIn();
+    if (gUser == null) return null; // User canceled login
 
+    final GoogleSignInAuthentication gAuth = await gUser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: gAuth.accessToken,
+      idToken: gAuth.idToken,
+    );
 
-  // Sign in with Google
-  Future<User?> signInWithGoogle() async {
-    try {
-      // Trigger the Google Authentication flow
-      final GoogleSignInAccount? gUser = await _googleSignIn.signIn();
-      if (gUser == null) return null; // User cancelled the sign-in
-
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication gAuth = await gUser.authentication;
-
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: gAuth.accessToken,
-        idToken: gAuth.idToken,
-      );
-
-      // This token can be used to authenticate with Firebase
-      UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
-      return userCredential.user;
-    } catch (error) {
-      print("Error signing in with Google: $error");
-      return null; // Handle errors as needed
-    }
+    return await _auth.signInWithCredential(credential);
   }
 
   // Sign out

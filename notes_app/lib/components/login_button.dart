@@ -28,23 +28,7 @@ class LoginButton extends StatelessWidget {
         child: Center(
             child: Text(text,
                 style: GoogleFonts.dmSans(color: Colors.white, fontSize: 20))),
-        // child: ElevatedButton(
-        //   onPressed: () {},
-        //   style: ElevatedButton.styleFrom(
-        //     backgroundColor: Colors.transparent,
-        //     shadowColor: Colors.transparent,
-        //   ),
-        //   child: const Text(
-        //     "Σύνδεση",
-        //     textAlign: TextAlign.center,
-        //     style: TextStyle(
-        //       fontSize: 20,
-        //       color: Colors.white,
-        //       fontWeight: FontWeight.normal,
-        //       fontFamily: 'Helvetica',
-        //     ),
-        //   ),
-        // ),
+    
       ),
     );
   }
