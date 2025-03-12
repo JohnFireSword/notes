@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notes_app/components/drawer_content.dart';
+import 'package:notes_app/pages/settings_drawer.dart';
 import 'package:notes_app/pages/settings_page.dart';
 import 'package:notes_app/pages/task_details.dart';
 
@@ -41,7 +42,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const SettingsPage()),
+                MaterialPageRoute(builder: (context) => const SettingsDrawerPage()),
               );
             },
           ),
