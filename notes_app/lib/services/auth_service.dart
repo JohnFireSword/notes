@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:notes_app/models/auth_data.dart';
@@ -60,6 +61,30 @@ class AuthService {
     );
 
     return await _auth.signInWithCredential(credential);
+  }
+
+  signInWithFacebook() async {
+    try {
+      // Logout first to ensure the user selection prompt appears
+
+      final LoginResult result = await FacebookAuth.instance.login();
+
+      if (result.status == LoginStatus.success) {
+        final AccessToken accessToken = result.accessToken!;
+        final OAuthCredential credential =
+            FacebookAuthProvider.credential(result.accessToken!.tokenString);
+
+        UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
+        return userCredential.user;
+      } else {
+        print("Facebook Login Failed: ${result.status}");
+        return null;
+      }
+    } catch (error) {
+      print("Facebook Login Error: $error");
+      return null;
+    }
   }
 
   // Sign out

@@ -35,6 +35,19 @@ class AuthScreen extends StatelessWidget {
     }
   }
 
+  void signInWithFacebook(BuildContext context) async {
+    final user = await _authService.signInWithFacebook();
+    if (user != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const NotesPage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Facebook sign in failed!")));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
